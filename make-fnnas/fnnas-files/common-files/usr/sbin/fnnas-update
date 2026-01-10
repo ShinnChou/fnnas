@@ -230,7 +230,7 @@ init_var() {
 
     # Adjust the custom kernel repository url format
     [[ -z "${KERNEL_REPO}" ]] && KERNEL_REPO="ophub/fnnas"
-    [["${KERNEL_REPO}" =~ ophub/kernel ]] && KERNEL_REPO="ophub/fnnas"
+    [[ "${KERNEL_REPO}" =~ ophub/kernel ]] && KERNEL_REPO="ophub/fnnas"
     [[ "${KERNEL_REPO}" =~ ^https: ]] && KERNEL_REPO="$(echo ${KERNEL_REPO} | awk -F'/' '{print $4"/"$5}')"
     kernel_api="https://github.com/${KERNEL_REPO}"
 
@@ -340,7 +340,7 @@ download_kernel() {
     [[ "${?}" -ne "0" ]] && error_msg "Failed to download kernel."
     tar -mxzf "${kernel_path}/${inputs_kernel}-${PLATFORM}.tar.gz" -C "${kernel_path}"
     [[ "${?}" -ne "0" ]] && error_msg "Failed to extract kernel [ ${inputs_kernel} ], stop updating."
-    kernel_path="${kernel_path}/${inputs_kernel}"
+    kernel_path="${kernel_path}/${inputs_kernel}-${PLATFORM}"
 
     sync && echo ""
 }
